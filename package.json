@@ -1,7 +1,7 @@
 {
   "name": "first_rr_app",
   "version": "0.0.0",
-  "description": "Webpack demo app",
+  "description": "React Webpack and Mocha starter",
   "main": "index.js",
   "scripts": {
     "build": "TARGET=build webpack",
@@ -34,6 +34,7 @@
     "webpack-merge": "^0.1.2"
   },
   "dependencies": {
+    "babel-runtime": "^5.8.12",
     "react": "^0.13.3"
   }
 }
