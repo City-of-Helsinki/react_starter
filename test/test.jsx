@@ -99,3 +99,27 @@ describe('D3 dispatch test', function () {
     });
 });
 
+describe('queue test', function () {
+    let test_queue = queue(1);
+    let results = [];
+    let update = (val) => {
+        console.log("processing", val)
+        process.nextTick(function() {
+            results.push(val);
+            console.log("update", results);
+            }
+        );
+    };
+
+    it('should add calls to results', function (done) {
+        test_queue.defer(update, 1);
+        test_queue.defer(update, 2);
+        test_queue.awaitAll(function (error, results) {
+            console.log("after await", error, results);
+            //expect(results.length).to.equal(1);
+            //expect(results[0]).to.equal(1);
+            done();
+        });
+    });
+
+});
