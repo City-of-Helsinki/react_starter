@@ -2,6 +2,9 @@ import { expect } from 'chai';
 import Note from '../app/components/Note';
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
+import d3 from 'd3';
+import queue from 'queue-async';
+
 //var jsdom = require("jsdom");
 //
 //var jsdom = require('jsdom')
@@ -48,7 +51,7 @@ describe('Note component test', function() {
     });
 
     it('should render a note', function() {
-        expect(note.props.children).to.equal('Learn Webpack with testing and stuff!');
+        expect(note.props.children).to.equal('Learn Webpack with Mocha testing and stuff!');
     });
 
 });
@@ -64,7 +67,35 @@ describe('React with DOM test', function() {
         );
 
         var elem = TestUtils.findRenderedDOMComponentWithTag(note, 'div');
-        expect(elem.getDOMNode().textContent).to.equal('Learn Webpack with testing and stuff!');
+        expect(elem.getDOMNode().textContent).to.equal('Learn Webpack with Mocha testing and stuff!');
     })
 }
 );
+
+describe('D3 dispatch test', function () {
+
+    let count = 0;
+    let status = true;
+
+    let dispatch = d3.dispatch("start", "end");
+
+    dispatch.on("start", () => {
+        if (status) count += 1;
+    });
+
+    dispatch.on('end', () => {
+        status = false;
+    });
+
+    it('should update count when dispatch type is start', function () {
+        dispatch.start();
+        dispatch.start();
+        expect(count).to.equal(2);
+    });
+    it('should stop updating count when dispatch type is end', function () {
+        dispatch.end();
+        dispatch.start();
+        expect(count).to.equal(2);
+    });
+});
+
