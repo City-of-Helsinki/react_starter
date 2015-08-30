@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "TARGET=build webpack",
-    "start": "TARGET=dev webpack-dev-server --devtool eval-source --progress --colors --hot --inline --history-api-fallback"
+    "start": "TARGET=dev webpack-dev-server --devtool eval-source-map --progress --colors --hot --inline --history-api-fallback",
+    "cosmos": "node_modules/.bin/component-playground --components-path app/components --fixtures-path app/fixtures"
   },
   "keywords": [
     "webpack",
@@ -18,6 +19,11 @@
     "babel-core": "^5.7.4",
     "babel-loader": "^5.3.2",
     "chai": "^3.2.0",
+    "cjsx-loader": "^2.0.1",
+    "coffee-loader": "^0.7.2",
+    "coffee-react-transform": "^3.2.0",
+    "coffee-script": "^1.9.3",
+    "cosmos-js": "^0.6.8",
     "css-loader": "^0.15.5",
     "html-webpack-plugin": "^1.6.0",
     "jsdom": "^5.6.1",

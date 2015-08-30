@@ -6,6 +6,16 @@ var merge = require('webpack-merge');
 var TARGET = process.env.TARGET;
 var ROOT_PATH = path.resolve(__dirname);
 
+module.exports.webpack = function(config) {
+    config.module.loaders.push([
+        {
+            test: /\.cjsx$/,
+            loaders: ['coffee', 'cjsx'],
+            include: path.resolve(ROOT_PATH, 'app')}
+    ]);
+    return config;
+};
+
 var common = {
   entry: [path.resolve(ROOT_PATH, 'app/main')],
   resolve: {
@@ -69,7 +79,7 @@ if(TARGET === 'dev') {
         {
           test: /\.jsx?$/,
           loaders: ['react-hot', 'babel?optional[]=runtime&stage=0'],
-          include: path.resolve(ROOT_PATH, 'app')
+          include: path.resolve(ROOT_PATH, 'app'),
         },
         {
           test: /\.cjsx$/,
