@@ -9,7 +9,7 @@ var ROOT_PATH = path.resolve(__dirname);
 var common = {
   entry: [path.resolve(ROOT_PATH, 'app/main')],
   resolve: {
-    extensions: ['', '.js', '.jsx', '.cjsx', '.coffee']
+    extensions: ['', '.js', '.jsx', '.cjsx', '.coffee', '.ts', '.tsx']
   },
   output: {
     path: path.resolve(ROOT_PATH, 'build'),
@@ -30,6 +30,53 @@ var common = {
   ]
 };
 
+if(TARGET === 'library') {
+    module.exports = {
+        entry: [path.resolve(ROOT_PATH, 'app/components/kuppi.cjsx')],
+        resolve: {
+            extensions: ['', '.js', '.jsx', '.cjsx', '.coffee']
+        },
+        output: {
+            // export itself to a global var
+            libraryTarget: "var",
+            // name of the global var: "Foo"
+            library: "kuppi",
+            path: path.resolve(ROOT_PATH, 'build'),
+            filename: 'kuppi.js'
+        },
+        devtool: 'source-map',
+        module: {
+            loaders: [
+                {
+                    test: /\.jsx?$/,
+                    loader: 'babel?stage=0',
+                    include: path.resolve(ROOT_PATH, 'app')
+                },
+                {
+                    test: /\.cjsx$/,
+                    loaders: ['react-hot', 'coffee', 'cjsx'],
+                    include: path.resolve(ROOT_PATH, 'app')},
+                { test: /\.coffee$/,
+                    loader: 'coffee',
+                    include: path.resolve(ROOT_PATH, 'app')}
+            ]
+        },
+        plugins: [
+            new webpack.DefinePlugin({
+                'process.env': {
+                    // This has effect on the react lib size
+                    'NODE_ENV': JSON.stringify('production')
+                }
+            })
+            //new webpack.optimize.UglifyJsPlugin({
+            //  compress: {
+            //    warnings: false
+            //  }
+            //})
+        ]
+    };
+}
+
 if(TARGET === 'build') {
   module.exports = merge(common, {
     devtool: 'source-map',
@@ -37,9 +84,16 @@ if(TARGET === 'build') {
       loaders: [
         {
           test: /\.jsx?$/,
-          loader: 'babel?stage=1',
+          loader: 'babel?stage=0',
           include: path.resolve(ROOT_PATH, 'app')
-        }
+        },
+        {
+          test: /\.cjsx$/,
+          loaders: ['react-hot', 'coffee', 'cjsx'],
+          include: path.resolve(ROOT_PATH, 'app')},
+        { test: /\.coffee$/,
+          loader: 'coffee',
+          include: path.resolve(ROOT_PATH, 'app')}
       ]
     },
     plugins: [
@@ -48,12 +102,12 @@ if(TARGET === 'build') {
           // This has effect on the react lib size
           'NODE_ENV': JSON.stringify('production')
         }
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
-        }
       })
+      //new webpack.optimize.UglifyJsPlugin({
+      //  compress: {
+      //    warnings: false
+      //  }
+      //})
     ]
   });
 }
@@ -74,10 +128,18 @@ if(TARGET === 'dev') {
         {
           test: /\.cjsx$/,
           loaders: ['react-hot', 'coffee', 'cjsx'],
-          include: path.resolve(ROOT_PATH, 'app')},
+          include: path.resolve(ROOT_PATH, 'app')
+        },
         { test: /\.coffee$/,
           loader: 'coffee',
-          include: path.resolve(ROOT_PATH, 'app')}
+          include: path.resolve(ROOT_PATH, 'app')
+        },
+        {
+          test: /\.tsx?$/,
+          loaders: ['react-hot', 'babel?optional[]=runtime&stage=0', 'ts-loader'],
+          include: path.resolve(ROOT_PATH, 'app'),
+          ts: {compilerOptions: 'jsx'}
+        }
       ],
     },
   });
