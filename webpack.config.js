@@ -5,11 +5,12 @@ var merge = require('webpack-merge');
 
 var TARGET = process.env.TARGET;
 var ROOT_PATH = path.resolve(__dirname);
+var BUILD, DEV;
 
 var common = {
   entry: [path.resolve(ROOT_PATH, 'app/main')],
   resolve: {
-    extensions: ['', '.js', '.jsx', '.cjsx', '.coffee', '.ts', '.tsx']
+    extensions: ['', '.js', '.jsx', '.cjsx', '.coffee']
   },
   output: {
     path: path.resolve(ROOT_PATH, 'build'),
@@ -140,7 +141,7 @@ if(TARGET === 'dev') {
           include: path.resolve(ROOT_PATH, 'app'),
           ts: {compilerOptions: 'jsx'}
         }
-      ],
-    },
+      ]
+    }
   });
 }

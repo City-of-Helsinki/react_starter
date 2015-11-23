@@ -11,4 +11,3 @@ export default class Tyyppi extends React.Component<Props, {}> {
         return <span>This coming with types: {this.props.foo}</span>
     }
 }
-
