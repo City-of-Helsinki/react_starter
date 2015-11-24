@@ -39,11 +39,14 @@ if(TARGET === 'library') {
         },
         output: {
             // export itself to a global var
-            libraryTarget: "var",
+            libraryTarget: "commonjs2",
             // name of the global var: "Foo"
             library: "kuppi",
             path: path.resolve(ROOT_PATH, 'build'),
             filename: 'kuppi.js'
+        },
+        externals: {
+            'react': 'react'
         },
         devtool: 'source-map',
         module: {
@@ -55,7 +58,7 @@ if(TARGET === 'library') {
                 },
                 {
                     test: /\.cjsx$/,
-                    loaders: ['react-hot', 'coffee', 'cjsx'],
+                    loaders: ['coffee', 'cjsx'],
                     include: path.resolve(ROOT_PATH, 'app')},
                 { test: /\.coffee$/,
                     loader: 'coffee',
