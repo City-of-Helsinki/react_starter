@@ -39,14 +39,14 @@ if(TARGET === 'library') {
         },
         output: {
             // export itself to a global var
-            libraryTarget: "var",
+            libraryTarget: "commonjs2",
             // name of the global var: "Foo"
             library: "kuppi",
             path: path.resolve(ROOT_PATH, 'build'),
             filename: 'kuppi.js'
         },
         externals: {
-            'react': 'React'
+            'react': 'react'
         },
         devtool: 'source-map',
         module: {
