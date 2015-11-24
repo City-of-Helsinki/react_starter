@@ -45,6 +45,9 @@ if(TARGET === 'library') {
             path: path.resolve(ROOT_PATH, 'build'),
             filename: 'kuppi.js'
         },
+        externals: {
+            'react': 'React'
+        },
         devtool: 'source-map',
         module: {
             loaders: [
@@ -55,7 +58,7 @@ if(TARGET === 'library') {
                 },
                 {
                     test: /\.cjsx$/,
-                    loaders: ['react-hot', 'coffee', 'cjsx'],
+                    loaders: ['coffee', 'cjsx'],
                     include: path.resolve(ROOT_PATH, 'app')},
                 { test: /\.coffee$/,
                     loader: 'coffee',

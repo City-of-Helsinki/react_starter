@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "TARGET=build webpack",
+    "library": "TARGET=library webpack",
     "start": "TARGET=dev webpack-dev-server --devtool eval-source-map --progress --colors --hot --inline --history-api-fallback",
     "cosmos": "node_modules/.bin/component-playground --components-path app/components --fixtures-path app/fixtures"
   },
