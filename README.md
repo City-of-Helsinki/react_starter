@@ -36,3 +36,19 @@ node_modules/mocha/bin/mocha  test/*.jsx --require babel/register
 ```
 
 Or just mocha depending on your $PATH settings.
+
+## Code Coverage
+
+Install Istanbul using Babel support wrapper to global NPM:
+
+    npm install -g babel-core babel-istanbul
+
+### Run test coverage
+
+    babel-istanbul cover _mocha --  test/*.jsx --require babel/register
+
+### Generate HTML report
+
+Report will go to coverage folder.
+
+    babel-istanbul report -v html
